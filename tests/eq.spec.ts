@@ -57,7 +57,12 @@ describe('Eq', () => {
     expect(eqIdAndDate.equals(someRecord2, someRecord3)).toBe(false)
   })
   it("Eq - SomeRecord - Full structure", () => {
+    const someScopedRecord: SomeRecord = {
+      ...someRecord1
+    }
     expect(eqTotalRecord.equals(someRecord1, someRecord1)).toBe(true)
+    expect(eqTotalRecord.equals(someRecord1, someScopedRecord)).toBe(true)
+
     expect(eqTotalRecord.equals(someRecord1, someRecord2)).toBe(false)
     expect(eqTotalRecord.equals(someRecord1, someRecord3)).toBe(false)
     expect(eqTotalRecord.equals(someRecord2, someRecord3)).toBe(false)
