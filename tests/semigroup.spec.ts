@@ -1,4 +1,4 @@
-import { SemigroupSum } from "fp-ts/number";
+import * as Number from "fp-ts/number";
 import * as Semigroup from "fp-ts/Semigroup";
 import * as Function from "fp-ts/function";
 import * as Boolean from "fp-ts/boolean";
@@ -8,10 +8,10 @@ describe('Semigroup', () => {
     it('Semigroup - Numbers - Addition', () => {
       const x = 1;
       const y = 2;
-      expect(SemigroupSum.concat(x, y)).toBe(3)
-      expect(SemigroupSum.concat(null as unknown as number, y)).toBe(y)
-      expect(SemigroupSum.concat(x, null as unknown as number)).toBe(x)
-      expect(SemigroupSum.concat(null as unknown as number, null as unknown as number)).toBe(0)
+      expect(Number.SemigroupSum.concat(x, y)).toBe(3)
+      expect(Number.SemigroupSum.concat(null as unknown as number, y)).toBe(y)
+      expect(Number.SemigroupSum.concat(x, null as unknown as number)).toBe(x)
+      expect(Number.SemigroupSum.concat(null as unknown as number, null as unknown as number)).toBe(0)
     })
     it('Semigroup - Numbers - First/Last', () => {
       const x = 1;
@@ -50,7 +50,21 @@ describe('Semigroup', () => {
       expect(isPositiveOrEven(3)).toBe(true)
       expect(isPositiveOrEven(-1)).toBe(false)
       expect(isPositiveOrEven(-2)).toBe(true)
+    })
+    it('Semigroup - Numbers - Fold - Sum', () => {
+      const summed = Semigroup.concatAll(Number.SemigroupSum)
 
+      const sumRes1 = summed(0)([1, 2, 3, 4])
+      expect(sumRes1).toBe(10)
+
+      const sumRes2 = summed(1)([1, 2, 3, 4])
+      expect(sumRes2).toBe(11)
+
+      const sumRes3 = summed(null as unknown as number)([1, 2, 3, 4])
+      expect(sumRes3).toBe(10)
+
+      const sumRes4 = summed(0)([null as unknown as number, 2, 3, 4])
+      expect(sumRes4).toBe(9)
     })
   })
 })
